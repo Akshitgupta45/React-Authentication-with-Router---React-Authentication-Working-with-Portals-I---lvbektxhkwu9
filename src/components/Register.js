@@ -8,7 +8,6 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Perform registration validation here
     if (email && password) {
       localStorage.setItem('user', JSON.stringify({ email, password }));
       setEmail('');
@@ -31,6 +30,7 @@ const Register = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="password-div">
@@ -40,6 +40,7 @@ const Register = () => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <button type="submit" className="register-btn">
@@ -47,7 +48,7 @@ const Register = () => {
         </button>
       </form>
       <div>
-        Already have an account?
+        Already have an account?{' '}
         <Link to="/login">
           <button className="login-link">Login</button>
         </Link>
