@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/App.css';
-import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import Store from './Store';
@@ -9,36 +8,38 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div id="main">
-      <BrowserRouter>
+    <Router>
+      <div>
         <nav>
           <ul>
             <li>
-              <Link>Register</Link>
+              <Link to="/">Register</Link>
             </li>
             <li>
-              <Link>Login</Link>
+              <Link to="/login">Login</Link>
             </li>
-            <li>
-                <Link>Store</Link>
-            </li>
+            {isLoggedIn && (
+              <li>
+                <Link to="/store">Store</Link>
+              </li>
+            )}
           </ul>
         </nav>
 
         <Switch>
-          <Route>
+          <Route exact path="/">
             <Register />
           </Route>
-          <Route>
-            <Login  />
+          <Route path="/login">
+            <Login setIsLoggedIn={setIsLoggedIn} />
           </Route>
-          <Route>
-            <Store />
+          <Route path="/store">
+            {isLoggedIn ? <Store /> : <Redirect to="/login" />}
           </Route>
         </Switch>
-      </BrowserRouter>
-    </div>
-  )
-}
+      </div>
+    </Router>
+  );
+};
 
 export default App;
